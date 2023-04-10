@@ -17,6 +17,11 @@ func RandomInt(min, max int64) int64 {
 	return min + rand.Int63n(max-min+1)
 }
 
+// RandomId generates a random account id
+func RandomId() int64 {
+	return RandomInt(1, 30)
+}
+
 // RandomString generates a random string of length n
 func RandomString(n int) string {
 	var sb strings.Builder

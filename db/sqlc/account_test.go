@@ -72,7 +72,7 @@ func TestUpdateAccount(t *testing.T) {
 	require.WithinDuration(t, account1.CreatedAt, account2.CreatedAt, time.Second)
 }
 
-func TestDelete(t *testing.T) {
+func TestDeleteAccount(t *testing.T) {
 	account1 := createRandomAccount(t)
 	err := testQueries.DeleteAccount(context.Background(), account1.ID)
 
