@@ -107,6 +107,23 @@ func (q *Queries) GetAccounts(ctx context.Context, arg GetAccountsParams) ([]Acc
 	return items, nil
 }
 
+const getRandomAccount = `-- name: GetRandomAccount :one
+SELECT id, owner, balance, currency, created_at FROM accounts ORDER BY RANDOM() LIMIT 1
+`
+
+func (q *Queries) GetRandomAccount(ctx context.Context) (Account, error) {
+	row := q.db.QueryRowContext(ctx, getRandomAccount)
+	var i Account
+	err := row.Scan(
+		&i.ID,
+		&i.Owner,
+		&i.Balance,
+		&i.Currency,
+		&i.CreatedAt,
+	)
+	return i, err
+}
+
 const updateAccount = `-- name: UpdateAccount :one
 UPDATE accounts
 SET balance = $2

@@ -26,3 +26,6 @@ RETURNING *;
 -- name: DeleteAccount :exec
 DELETE FROM accounts 
 WHERE id = $1;
+
+-- name: GetRandomAccount :one
+SELECT * FROM accounts ORDER BY RANDOM() LIMIT 1;
