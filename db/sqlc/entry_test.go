@@ -12,7 +12,7 @@ import (
 
 func createRandomEntry(t *testing.T) Entry {
 	arg := CreateEntryParams{
-		AccountID: util.RandomId(),
+		AccountID: getValidRandomId(t),
 		Amount:    util.RandomMoney(),
 	}
 	entry, err := testQueries.CreateEntry(context.Background(), arg)
