@@ -16,7 +16,7 @@ INSERT INTO transfers (
     amount
 ) VALUES (
     $1, $2, $3
-) RETURNING id, from_account_id, to_account_id, amount
+) RETURNING id, from_account_id, to_account_id, amount, created_at
 `
 
 type CreateTransferParams struct {
@@ -33,6 +33,7 @@ func (q *Queries) CreateTransfer(ctx context.Context, arg CreateTransferParams) 
 		&i.FromAccountID,
 		&i.ToAccountID,
 		&i.Amount,
+		&i.CreatedAt,
 	)
 	return i, err
 }
@@ -48,7 +49,7 @@ func (q *Queries) DeleteTransfer(ctx context.Context, id int64) error {
 }
 
 const getTransfer = `-- name: GetTransfer :one
-SELECT id, from_account_id, to_account_id, amount FROM transfers
+SELECT id, from_account_id, to_account_id, amount, created_at FROM transfers
 WHERE id = $1 LIMIT 1
 `
 
@@ -60,12 +61,13 @@ func (q *Queries) GetTransfer(ctx context.Context, id int64) (Transfer, error) {
 		&i.FromAccountID,
 		&i.ToAccountID,
 		&i.Amount,
+		&i.CreatedAt,
 	)
 	return i, err
 }
 
 const getTransfers = `-- name: GetTransfers :many
-SELECT id, from_account_id, to_account_id, amount FROM transfers
+SELECT id, from_account_id, to_account_id, amount, created_at FROM transfers
 ORDER BY id
 LIMIT $1
 OFFSET $2
@@ -90,6 +92,7 @@ func (q *Queries) GetTransfers(ctx context.Context, arg GetTransfersParams) ([]T
 			&i.FromAccountID,
 			&i.ToAccountID,
 			&i.Amount,
+			&i.CreatedAt,
 		); err != nil {
 			return nil, err
 		}
@@ -108,7 +111,7 @@ const updateTransfer = `-- name: UpdateTransfer :one
 UPDATE transfers 
 SET amount = $2
 WHERE id = $1
-RETURNING id, from_account_id, to_account_id, amount
+RETURNING id, from_account_id, to_account_id, amount, created_at
 `
 
 type UpdateTransferParams struct {
@@ -124,6 +127,7 @@ func (q *Queries) UpdateTransfer(ctx context.Context, arg UpdateTransferParams) 
 		&i.FromAccountID,
 		&i.ToAccountID,
 		&i.Amount,
+		&i.CreatedAt,
 	)
 	return i, err
 }
