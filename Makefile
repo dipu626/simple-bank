@@ -14,5 +14,7 @@ runsingletestmethod:
 	go test -run TestMain ./db/sqlc
 testall:
 	go test -v -cover ./...
+server:
+	go run main.go
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc testall
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc testall server
