@@ -16,5 +16,7 @@ testall:
 	go test -v -cover ./...
 server:
 	go run main.go
+mock:
+	mockgen -build_flags=--mod=mod -package mockdb -destination db/mock/store.go github.com/dipu626/simple-bank/db/sqlc Store
 
-.PHONY: postgres createdb dropdb migrateup migratedown sqlc testall server
+.PHONY: postgres createdb dropdb migrateup migratedown sqlc testall server mock
