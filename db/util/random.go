@@ -7,6 +7,7 @@ import (
 )
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz"
+const passwordAlphabets = "abcdefghijklmnopqrstuvwxyz!@#$%^&*1234567890"
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
@@ -54,4 +55,16 @@ func RandomCurrency() string {
 
 func RandomEmail() string {
 	return RandomString(6) + "@test.mail"
+}
+
+func RandomPassword(n int) string {
+	var sb strings.Builder
+	k := len(passwordAlphabets)
+
+	for i := 0; i < n; i++ {
+		c := passwordAlphabets[rand.Intn(k)]
+		sb.WriteByte(c)
+	}
+
+	return sb.String()
 }
