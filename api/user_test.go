@@ -20,9 +20,6 @@ import (
 func TestGetUser(t *testing.T) {
 	user := randomUser()
 
-	fmt.Println(user.Username)
-	fmt.Println(user.FullName)
-
 	testCases := []struct {
 		name          string
 		username      string
@@ -87,6 +84,8 @@ func TestGetUser(t *testing.T) {
 			// start test server and send request
 			server := NewServer(store)
 			recorder := httptest.NewRecorder()
+
+			// Marshal body data to JSON
 
 			url := fmt.Sprintf("/users/%s", tc.username)
 			request, err := http.NewRequest(http.MethodGet, url, nil)
